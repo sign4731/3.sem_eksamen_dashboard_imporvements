@@ -1,4 +1,7 @@
 import "../../sass/index.scss";
+import { makeChart } from "./chart";
+// import { chartData, chart } from "frappe-charts/dist/frappe-charts.min.esm";
+// import { addEventListenersToLinePoints } from "./click_linepoints";
 
 ("use strict");
 
@@ -40,7 +43,8 @@ async function init() {
 
   await getData();
 
-  createChart();
+  // createChart();
+  // addEventListenersToLinePoints();
 }
 
 async function getData() {
@@ -85,26 +89,26 @@ async function getData() {
   resetStorage();
 }
 
-function createChart() {
-  const container = document.querySelector(".revenue_time");
-  Object.keys(revenueResults).forEach(function (key) {
-    const li = document.createElement("li");
-    li.classList.add(`${key}`);
+// function createChart() {
+//   const container = document.querySelector(".revenue_time");
+//   Object.keys(revenueResults).forEach(function (key) {
+//     const li = document.createElement("li");
+//     li.classList.add(`${key}`);
 
-    // tilføjelse
-    // li.textContent = key;
-    //
-    container.append(li);
+//     // tilføjelse
+//     // li.textContent = key;
+//     //
+//     container.append(li);
 
-    const span = document.createElement("span");
-    span.textContent = key;
-    li.append(span);
+//     const span = document.createElement("span");
+//     span.textContent = key;
+//     li.append(span);
 
-    const div = document.createElement("div");
-    div.classList.add(`${key}`, "revenue_total", "beer-bar__percent");
-    li.append(div);
-  });
-}
+//     const div = document.createElement("div");
+//     div.classList.add(`${key}`, "revenue_total", "beer-bar__percent");
+//     li.append(div);
+//   });
+// }
 
 function getDailyOrders() {
   if (data.serving.length > 0) {
@@ -124,7 +128,7 @@ function getDailyOrders() {
   }
   console.log(localStorage.servedCount);
   displayNumber("served");
-  getChartPoints();
+  // getChartPoints();
 }
 
 function getOrderPrice(newestCustomer) {
@@ -140,7 +144,7 @@ function getOrderPrice(newestCustomer) {
 }
 
 function displayDailyRevenue() {
-  document.querySelector(".revenues_wrapper .total").textContent = localStorage.dailyRevenue;
+  // document.querySelector(".revenues_wrapper .total").textContent = localStorage.dailyRevenue;
 }
 
 function getHourlyRevenue() {
@@ -162,6 +166,7 @@ function getHourlyRevenue() {
     localStorage.setItem("hourlyRevenue", JSON.stringify(revenue));
 
     displayHourlyRevenue(revenue, hourlyRevenue);
+    makeChart(revenue);
   }
 
   if (time.getMinutes() == "00") {
@@ -178,57 +183,59 @@ function displayHourlyRevenue(revenue, hourlyRevenue) {
   document.querySelector(".hourly").textContent = hourlyRevenue;
 }
 
-function getChartPoints() {
-  let points = "";
-  if (!JSON.parse(localStorage.getItem("hourlyRevenue"))) {
-    console.log("please wait for next hourly interval to start collecting data");
-  } else {
-    if (document.querySelector(".chart_box span").classList.contains("hidden")) {
-      let revenues = Object.values(JSON.parse(localStorage.getItem("hourlyRevenue")));
-      revenues.forEach((value, i) => {
-        // points += i * 65 + "," + value / 100 + " ";
-        points += i * 63 + "," + value / 100 + " ";
-      });
-    } else {
-      document.querySelector(".chart_box span").classList.add("hidden");
-      let revenues = Object.values(JSON.parse(localStorage.getItem("hourlyRevenue")));
-      revenues.forEach((value, i) => {
-        // points += i * 65 + "," + value / 100 + " ";
-        points += i * 63 + "," + value / 100 + " ";
-      });
-    }
-  }
+// function getChartPoints() {
+//   let points = "";
+//   if (!JSON.parse(localStorage.getItem("hourlyRevenue"))) {
+//     console.log("please wait for next hourly interval to start collecting data");
+//   } else {
+//     if (document.querySelector(".chart_box span").classList.contains("hidden")) {
+//       let revenues = Object.values(JSON.parse(localStorage.getItem("hourlyRevenue")));
+//       revenues.forEach((value, i) => {
+//         // points += i * 65 + "," + value / 100 + " ";
+//         points += i * 63 + "," + value / 100 + " ";
+//       });
+//     } else {
+//       document.querySelector(".chart_box span").classList.add("hidden");
+//       let revenues = Object.values(JSON.parse(localStorage.getItem("hourlyRevenue")));
+//       revenues.forEach((value, i) => {
+//         // points += i * 65 + "," + value / 100 + " ";
+//         points += i * 63 + "," + value / 100 + " ";
+//       });
+//     }
+//   }
 
-  const line = document.querySelector("#line");
-  line.setAttribute("points", points);
-  line.style.strokeDashoffset = 0;
+//   const line = document.querySelector("#line");
+//   line.setAttribute("points", points);
+//   line.style.strokeDashoffset = 0;
 
-  displayPoints(points);
-}
+//   displayPoints(points);
+// }
 
-function displayPoints(points) {
-  let pointsSplitted = points.split(" ");
-  document.querySelector("#curvechart g").innerHTML = "";
+// function displayPoints(points) {
+//   let pointsSplitted = points.split(" ");
+//   document.querySelector("#curvechart g").innerHTML = "";
 
-  // returning Nan at the end
-  pointsSplitted.pop();
+//   // returning Nan at the end
+//   pointsSplitted.pop();
 
-  for (let i = 0; i < pointsSplitted.length; i++) {
-    const newPoint = pointsSplitted[i].split(",");
-    const length = parseInt(newPoint[0]);
-    const height = parseInt(newPoint[1]);
+//   for (let i = 0; i < pointsSplitted.length; i++) {
+//     const newPoint = pointsSplitted[i].split(",");
+//     const length = parseInt(newPoint[0]);
+//     const height = parseInt(newPoint[1]);
 
-    const linepoint = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-    linepoint.setAttribute(`cx`, `${length}`);
-    linepoint.setAttribute(`cy`, `${height}`);
-    linepoint.setAttribute(`r`, `4`);
-    linepoint.setAttribute(`stroke`, `none`);
-    linepoint.setAttribute(`fill`, `#3ccb75`);
-    linepoint.classList.add(`${[i + 8]}`);
+//     const linepoint = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+//     linepoint.setAttribute(`cx`, `${length}`);
+//     linepoint.setAttribute(`cy`, `${height}`);
+//     linepoint.setAttribute(`r`, `4`);
+//     linepoint.setAttribute(`stroke`, `none`);
+//     linepoint.setAttribute(`fill`, `#3ccb75`);
+//     linepoint.classList.add(`${[i + 8]}`);
 
-    document.querySelector("#curvechart g").appendChild(linepoint);
-  }
-}
+//     document.querySelector("#curvechart g").appendChild(linepoint);
+//     linepoint.addEventListener("click", addEventListenersToLinePoints);
+//   }
+//   // addEventListenersToLinePoints();
+// }
 
 function getBartenderOrders() {
   const list = document.querySelector(".js-bartender-order-list");

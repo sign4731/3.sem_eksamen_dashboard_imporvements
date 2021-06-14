@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "chart.js": "^3.3.0",
-    "dayjs": "^1.10.5"
+    "dayjs": "^1.10.5",
+    "frappe-charts": "^1.6.1"
   }
 }
