@@ -90,6 +90,10 @@ function createChart() {
   Object.keys(revenueResults).forEach(function (key) {
     const li = document.createElement("li");
     li.classList.add(`${key}`);
+
+    // tilføjelse
+    // li.textContent = key;
+    //
     container.append(li);
 
     const span = document.createElement("span");
@@ -128,10 +132,15 @@ function getOrderPrice(newestCustomer) {
   let findPrice = findOrder.length * 40;
   if (localStorage.dailyRevenue) {
     localStorage.dailyRevenue = Number(JSON.parse(localStorage.dailyRevenue)) + findPrice;
+    displayDailyRevenue();
   } else {
     localStorage.dailyRevenue = 0;
   }
   getHourlyRevenue();
+}
+
+function displayDailyRevenue() {
+  document.querySelector(".revenues_wrapper .total").textContent = localStorage.dailyRevenue;
 }
 
 function getHourlyRevenue() {
@@ -141,13 +150,18 @@ function getHourlyRevenue() {
     let hourlyRevenue = parseInt(JSON.parse(localStorage.getItem("dailyRevenue")));
     revenueResults[hour] = hourlyRevenue;
 
+    console.log(hourlyRevenue);
+
     let revenue = JSON.parse(localStorage.getItem("hourlyRevenue")) || revenueResults;
 
     revenue[hour] = revenueResults[hour];
 
+    console.log(revenueResults);
+
+    console.log(revenue);
     localStorage.setItem("hourlyRevenue", JSON.stringify(revenue));
 
-    displayHourlyRevenue(revenue);
+    displayHourlyRevenue(revenue, hourlyRevenue);
   }
 
   if (time.getMinutes() == "00") {
@@ -155,11 +169,13 @@ function getHourlyRevenue() {
   }
 }
 
-function displayHourlyRevenue(revenue) {
+function displayHourlyRevenue(revenue, hourlyRevenue) {
   document.querySelectorAll(".revenue_total").forEach((total) => {
     let getHour = total.className.split(" ")[0];
     total.textContent = `${revenue[getHour]},-`;
   });
+
+  document.querySelector(".hourly").textContent = hourlyRevenue;
 }
 
 function getChartPoints() {
@@ -170,13 +186,15 @@ function getChartPoints() {
     if (document.querySelector(".chart_box span").classList.contains("hidden")) {
       let revenues = Object.values(JSON.parse(localStorage.getItem("hourlyRevenue")));
       revenues.forEach((value, i) => {
-        points += i * 65 + "," + value / 100 + " ";
+        // points += i * 65 + "," + value / 100 + " ";
+        points += i * 63 + "," + value / 100 + " ";
       });
     } else {
       document.querySelector(".chart_box span").classList.add("hidden");
       let revenues = Object.values(JSON.parse(localStorage.getItem("hourlyRevenue")));
       revenues.forEach((value, i) => {
-        points += i * 65 + "," + value / 100 + " ";
+        // points += i * 65 + "," + value / 100 + " ";
+        points += i * 63 + "," + value / 100 + " ";
       });
     }
   }
@@ -184,6 +202,32 @@ function getChartPoints() {
   const line = document.querySelector("#line");
   line.setAttribute("points", points);
   line.style.strokeDashoffset = 0;
+
+  displayPoints(points);
+}
+
+function displayPoints(points) {
+  let pointsSplitted = points.split(" ");
+  document.querySelector("#curvechart g").innerHTML = "";
+
+  // returning Nan at the end
+  pointsSplitted.pop();
+
+  for (let i = 0; i < pointsSplitted.length; i++) {
+    const newPoint = pointsSplitted[i].split(",");
+    const length = parseInt(newPoint[0]);
+    const height = parseInt(newPoint[1]);
+
+    const linepoint = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    linepoint.setAttribute(`cx`, `${length}`);
+    linepoint.setAttribute(`cy`, `${height}`);
+    linepoint.setAttribute(`r`, `4`);
+    linepoint.setAttribute(`stroke`, `none`);
+    linepoint.setAttribute(`fill`, `#3ccb75`);
+    linepoint.classList.add(`${[i + 8]}`);
+
+    document.querySelector("#curvechart g").appendChild(linepoint);
+  }
 }
 
 function getBartenderOrders() {
@@ -249,6 +293,14 @@ function displayBartenderOrders(bartenders) {
 
     clone.querySelector(".bartender_name").textContent = person.name;
     clone.querySelector(".order_num_wrapper").textContent = JSON.parse(localStorage[`bartender${person.name}`]).ordersServed;
+
+    if (bartenders[0] === person) {
+      clone.querySelector(".order_num_wrapper").style.backgroundColor = "#3ccb75";
+    } else if (bartenders[1] === person) {
+      clone.querySelector(".order_num_wrapper").style.backgroundColor = "#ff912d";
+    } else if (bartenders[2] === person) {
+      clone.querySelector(".order_num_wrapper").style.backgroundColor = "#f85229";
+    }
 
     list.append(clone);
   });

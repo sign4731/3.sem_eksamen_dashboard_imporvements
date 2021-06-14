@@ -84,7 +84,7 @@
           </section>
 
           <section class="inventory-section orders">
-            <h3 class="inventory-section__title">Orders per employee</h3>
+            <h3 class="inventory-section__title nowrap">Orders per employee</h3>
             <div class="bartenders_wrapper">
               <ul class="js-bartender-order-list"></ul>
             </div>
@@ -92,7 +92,16 @@
 
           <section class="inventory-section revenue">
             <h3 class="inventory-section__title">Revenue today</h3>
-
+            <div class="revenues_wrapper">
+              <div>
+                <h4>Total</h4>
+                <div class="total"></div>
+              </div>
+              <div>
+                <h4>This hour</h4>
+                <div class="hourly"></div>
+              </div>
+            </div>
             <div class="revenue_box">
               <ul class="revenue_price">
                 <li>30.000,-</li>
@@ -103,9 +112,19 @@
               <p>hrs.</p>
               <ul class="revenue_time"></ul>
               <div class="chart_box">
+                <ul class="chart_lines">
+                  <li class="chart_line"></li>
+                  <li class="chart_line"></li>
+                  <li class="chart_line"></li>
+                  <li class="chart_line"></li>
+                  <li class="chart_line"></li>
+                  <li class="chart_line"></li>
+                  <li class="chart_line"></li>
+                </ul>
                 <span>please wait for next hourly interval to start collecting data</span>
                 <svg id="curvechart" viewBox="0 0 900 310" preserveAspectRatio="none">
                   <polyline id="line" pathLength="1" points="" />
+                  <g></g>
                 </svg>
               </div>
             </div>

@@ -15,7 +15,7 @@
   gap: math.div(vars.$spacing, 3) * 2;
 
   @media (min-width: vars.$breakpoint-small) {
-    height: 100%;
+    // height: 100%;
     grid-template-areas:
       "queue seved orders"
       "revenue revenue revenue";
@@ -25,34 +25,56 @@
   }
 
   .revenue {
-    // max-height: 450px;
     max-width: 100%;
     overflow: hidden;
-    height: 500px;
+    // height: 500px;
+
+    .revenues_wrapper {
+      display: flex;
+      justify-content: space-evenly;
+    }
+    h4 {
+      text-transform: uppercase;
+    }
   }
 
   .revenue_box {
     width: 100%;
-    // height: 340px;
-    // min-width: 500px;
     overflow-x: auto;
 
     display: grid;
     grid-template-columns: 70px auto auto 50px;
     // grid-template-rows: auto auto auto;
     grid-template-rows: 155px 155px 100px;
+    // grid-template-rows: 155px 155px 30px;
     grid-template-areas:
       "revenue_price chart_box chart_box ."
       "revenue_price chart_box chart_box ."
       ". revenue_time revenue_time hours";
+
+    .chart_lines {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      display: flex;
+      justify-content: space-between;
+
+      flex-direction: column;
+    }
+    .chart_line {
+      width: 100%;
+      height: 1px;
+      background: vars.$ui_color_light;
+      list-style-type: none;
+    }
     .revenue_time {
       display: flex;
       justify-content: space-between;
       list-style-type: none;
       width: 100%;
-      // align-self: flex-end;
       grid-area: revenue_time;
-      li {
+      margin-left: -9px;
+      > li {
         width: 20px;
         text-align: center;
         display: flex;
@@ -100,13 +122,18 @@
         // height: 100%;
         height: 310px;
         position: relative;
+        g {
+          transform: scaleY(-1) translateY(-310px);
+        }
       }
       #line {
-        stroke-width: 1;
+        stroke-width: 2;
         stroke: vars.$dark_green;
+        // fill: vars.$dark_green;
         fill: none;
         stroke-dasharray: 1;
-        transform: scaleY(-1) translateY(-300px);
+        transform: scaleY(-1) translateY(-310px);
+        stroke-linecap: butt;
       }
       span {
         color: tomato;
@@ -124,8 +151,31 @@
   }
   .order_num_wrapper {
     margin-left: auto;
+    padding: 0.2em 1em;
+    width: 50px;
+    border-radius: 2em;
+    background-color: vars.$error-background-color;
+    color: vars.$ui_bg_color;
+    font-size: 0.8rem;
+    text-align: center;
   }
   .bartender_name {
-    font-weight: 400;
+    font-weight: 600;
+    text-transform: none;
+    color: vars.$ui_color_dark;
   }
+  .bartenders_wrapper {
+    height: 100%;
+
+    .js-bartender-order-list {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+}
+
+.nowrap {
+  white-space: nowrap;
 }
