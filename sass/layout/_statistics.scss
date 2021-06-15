@@ -29,20 +29,32 @@
     overflow: hidden;
     // height: 500px;
     display: grid;
-    grid-template-rows: 10% auto auto;
+    grid-template-rows: 15% auto auto;
     grid-template-areas:
-      "revenue_header revenue_box revenue_box"
-      "revenues_wrapper revenue_box revenue_box"
-      "revenues_wrapper revenue_box revenue_box";
+      "revenue_header revenue_header revenue_header"
+      "revenues_wrapper revenues_wrapper revenues_wrapper"
+      "revenue_box revenue_box revenue_box";
+    @media (min-width: vars.$breakpoint-small) {
+      grid-template-rows: 10% auto auto;
+      grid-template-areas:
+        "revenue_header revenue_box revenue_box"
+        "revenues_wrapper revenue_box revenue_box"
+        "revenues_wrapper revenue_box revenue_box";
+    }
 
     .revenue_header {
       grid-area: revenue_header;
     }
     .revenues_wrapper {
       display: flex;
-      flex-direction: column;
-      justify-content: space-evenly;
       grid-area: revenues_wrapper;
+      @media (min-width: vars.$breakpoint-small) {
+        flex-direction: column;
+        justify-content: space-evenly;
+      }
+      :first-child {
+        margin-right: 30px;
+      }
     }
     .total,
     .hourly {
@@ -60,6 +72,7 @@
   .revenue_box {
     width: 100%;
     overflow-x: auto;
+    overflow-y: hidden;
     padding-top: 70px;
     grid-area: revenue_box;
     display: grid;
