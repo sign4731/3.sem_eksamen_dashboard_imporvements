@@ -1,3 +1,4 @@
+import { Chart } from "frappe-charts/dist/frappe-charts.esm";
 import "../../sass/index.scss";
 import { makeChart } from "./chart";
 // import { chartData, chart } from "frappe-charts/dist/frappe-charts.min.esm";
@@ -43,6 +44,7 @@ async function init() {
 
   await getData();
 
+  // makeChart(revenueResults);
   // createChart();
   // addEventListenersToLinePoints();
 }
@@ -136,15 +138,10 @@ function getOrderPrice(newestCustomer) {
   let findPrice = findOrder.length * 40;
   if (localStorage.dailyRevenue) {
     localStorage.dailyRevenue = Number(JSON.parse(localStorage.dailyRevenue)) + findPrice;
-    displayDailyRevenue();
   } else {
     localStorage.dailyRevenue = 0;
   }
   getHourlyRevenue();
-}
-
-function displayDailyRevenue() {
-  // document.querySelector(".revenues_wrapper .total").textContent = localStorage.dailyRevenue;
 }
 
 function getHourlyRevenue() {
@@ -166,6 +163,7 @@ function getHourlyRevenue() {
     localStorage.setItem("hourlyRevenue", JSON.stringify(revenue));
 
     displayHourlyRevenue(revenue, hourlyRevenue);
+    displayDailyTotal(revenue);
     makeChart(revenue);
   }
 
@@ -181,6 +179,14 @@ function displayHourlyRevenue(revenue, hourlyRevenue) {
   });
 
   document.querySelector(".hourly").textContent = hourlyRevenue;
+}
+
+function displayDailyTotal(revenue) {
+  let dailyTotal = Object.keys(revenue).reduce((sum, key) => sum + parseFloat(revenue[key] || 0), 0);
+
+  console.log(dailyTotal);
+  document.querySelector(".total").textContent = dailyTotal;
+  // console.log(`sum:${sum(revenue)}`);
 }
 
 // function getChartPoints() {

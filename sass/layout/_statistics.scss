@@ -17,8 +17,8 @@
   @media (min-width: vars.$breakpoint-small) {
     // height: 100%;
     grid-template-areas:
-      "queue seved orders"
-      "revenue revenue revenue";
+      "revenue revenue revenue"
+      "queue seved orders";
     .revenue {
       grid-area: revenue;
     }
@@ -41,7 +41,7 @@
   .revenue_box {
     width: 100%;
     overflow-x: auto;
-
+    padding-top: 100px;
     // display: grid;
     grid-template-columns: 70px auto auto 50px;
     // grid-template-rows: auto auto auto;
