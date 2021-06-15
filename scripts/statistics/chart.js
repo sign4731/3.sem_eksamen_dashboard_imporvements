@@ -17,7 +17,7 @@ export function makeChart(revenue) {
     title: "",
     // animate: false,
     type: "line", // or 'bar', 'line', 'pie', 'percentage'
-    height: 200,
+    height: 230,
     colors: ["#3ccb75"],
 
     axisOptions: {

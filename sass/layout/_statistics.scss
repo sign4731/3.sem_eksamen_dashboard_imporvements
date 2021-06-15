@@ -28,119 +28,154 @@
     max-width: 100%;
     overflow: hidden;
     // height: 500px;
+    display: grid;
+    grid-template-rows: 10% auto auto;
+    grid-template-areas:
+      "revenue_header revenue_box revenue_box"
+      "revenues_wrapper revenue_box revenue_box"
+      "revenues_wrapper revenue_box revenue_box";
 
+    .revenue_header {
+      grid-area: revenue_header;
+    }
     .revenues_wrapper {
       display: flex;
+      flex-direction: column;
       justify-content: space-evenly;
+      grid-area: revenues_wrapper;
+    }
+    .total,
+    .hourly {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: vars.$ui_color_dark;
     }
     h4 {
       text-transform: uppercase;
+      // font-size: 0.7rem;
+      font-weight: 400;
     }
   }
 
   .revenue_box {
     width: 100%;
     overflow-x: auto;
-    padding-top: 100px;
-    // display: grid;
-    grid-template-columns: 70px auto auto 50px;
-    // grid-template-rows: auto auto auto;
-    grid-template-rows: 155px 155px 100px;
-    // grid-template-rows: 155px 155px 30px;
+    padding-top: 70px;
+    grid-area: revenue_box;
+    display: grid;
     grid-template-areas:
-      "revenue_price chart_box chart_box ."
-      "revenue_price chart_box chart_box ."
-      ". revenue_time revenue_time hours";
+      "kr chart chart"
+      "kr chart chart"
+      ". h h";
+    grid-template-columns: 15px auto auto;
 
-    .chart_lines {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      display: flex;
-      justify-content: space-between;
-
-      flex-direction: column;
-    }
-    .chart_line {
-      width: 100%;
-      height: 1px;
-      background: vars.$ui_color_light;
-      list-style-type: none;
-    }
-    .revenue_time {
-      display: flex;
-      justify-content: space-between;
-      list-style-type: none;
-      width: 100%;
-      grid-area: revenue_time;
-      margin-left: -9px;
-      > li {
-        width: 20px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-      }
-    }
-    p {
-      grid-area: hours;
+    .h {
       text-align: center;
+      grid-area: h;
     }
-    .revenue_total {
-      writing-mode: vertical-lr;
-      background: vars.$dark_green;
-      // transform: rotate(90deg);
-      width: auto;
-      height: 60px;
-      margin: 0;
-      display: flex;
-      align-items: center;
-      padding: 0.5em 0em;
+
+    .kr {
+      writing-mode: tb-rl;
+      transform: rotate(-180deg);
+      text-align: center;
+      grid-area: kr;
     }
-    .revenue_price {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: flex-end;
-      list-style-type: none;
-      height: 100%;
-      grid-area: revenue_price;
-      li {
-        padding-right: 5px;
-      }
+
+    p {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
     }
-    .chart_box {
-      min-width: 500px;
-      grid-area: chart_box;
-      border-bottom: 1px solid vars.$ui_color_dark;
-      border-left: 1px solid vars.$ui_color_dark;
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      #curvechart {
-        width: 100%;
-        // height: 100%;
-        height: 310px;
-        position: relative;
-        g {
-          transform: scaleY(-1) translateY(-310px);
-        }
-      }
-      #line {
-        stroke-width: 2;
-        stroke: vars.$dark_green;
-        // fill: vars.$dark_green;
-        fill: none;
-        stroke-dasharray: 1;
-        transform: scaleY(-1) translateY(-310px);
-        stroke-linecap: butt;
-      }
-      span {
-        color: tomato;
-        text-align: center;
-        margin: auto;
-      }
-    }
+
+    //   .chart_lines {
+    //     width: 100%;
+    //     height: 100%;
+    //     position: absolute;
+    //     display: flex;
+    //     justify-content: space-between;
+
+    //     flex-direction: column;
+    //   }
+    //   .chart_line {
+    //     width: 100%;
+    //     height: 1px;
+    //     background: vars.$ui_color_light;
+    //     list-style-type: none;
+    //   }
+    //   .revenue_time {
+    //     display: flex;
+    //     justify-content: space-between;
+    //     list-style-type: none;
+    //     width: 100%;
+    //     grid-area: revenue_time;
+    //     margin-left: -9px;
+    //     > li {
+    //       width: 20px;
+    //       text-align: center;
+    //       display: flex;
+    //       flex-direction: column;
+    //     }
+    //   }
+    //   p {
+    //     grid-area: hours;
+    //     text-align: center;
+    //   }
+    //   .revenue_total {
+    //     writing-mode: vertical-lr;
+    //     background: vars.$dark_green;
+    //     // transform: rotate(90deg);
+    //     width: auto;
+    //     height: 60px;
+    //     margin: 0;
+    //     display: flex;
+    //     align-items: center;
+    //     padding: 0.5em 0em;
+    //   }
+    //   .revenue_price {
+    //     display: flex;
+    //     flex-direction: column;
+    //     justify-content: space-between;
+    //     align-items: flex-end;
+    //     list-style-type: none;
+    //     height: 100%;
+    //     grid-area: revenue_price;
+    //     li {
+    //       padding-right: 5px;
+    //     }
+    //   }
+    //   .chart_box {
+    //     min-width: 500px;
+    //     grid-area: chart_box;
+    //     border-bottom: 1px solid vars.$ui_color_dark;
+    //     border-left: 1px solid vars.$ui_color_dark;
+    //     position: relative;
+    //     display: flex;
+    //     justify-content: space-between;
+    //     align-items: flex-end;
+    //     #curvechart {
+    //       width: 100%;
+    //       // height: 100%;
+    //       height: 310px;
+    //       position: relative;
+    //       g {
+    //         transform: scaleY(-1) translateY(-310px);
+    //       }
+    //     }
+    //     #line {
+    //       stroke-width: 2;
+    //       stroke: vars.$dark_green;
+    //       // fill: vars.$dark_green;
+    //       fill: none;
+    //       stroke-dasharray: 1;
+    //       transform: scaleY(-1) translateY(-310px);
+    //       stroke-linecap: butt;
+    //     }
+    //     span {
+    //       color: tomato;
+    //       text-align: center;
+    //       margin: auto;
+    //     }
+    //   }
   }
 
   .queue_number,
