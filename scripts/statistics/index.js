@@ -75,7 +75,7 @@ async function getData() {
     getBartenderOrders();
 
     // Call getQueue again, to wait for the next update to the queue
-    // setTimeout(getData, 4000);
+    setTimeout(getData, 4000);
   }
 
   // console.log(data);
