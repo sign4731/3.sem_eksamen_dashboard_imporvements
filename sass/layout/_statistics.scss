@@ -1,6 +1,6 @@
 @use "sass:math";
-
 @use "../abstracts/vars";
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Train+One&display=swap");
 
 :root {
   --spacing: #{math.div(vars.$spacing, 3)};
@@ -98,6 +98,34 @@
       font-size: 0.7rem;
       font-weight: 600;
       text-transform: uppercase;
+    }
+
+    .graph-svg-tip.comparison {
+      background: vars.$ui_color_light;
+      font-family: "Poppins", sans-serif;
+      border-radius: 5px;
+      box-shadow: 2px 4px 7px rgb(0 0 0 / 10%);
+      .tooltip-legend {
+        display: none;
+      }
+      .tooltip-value {
+        color: vars.$ui_color_dark;
+        font-size: 1.5rem;
+      }
+      .tooltip-label {
+        color: vars.$ui_color_dark;
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+        font-weight: 400;
+      }
+      .data-point-list > li > div:last-child {
+        display: flex;
+        flex-direction: column-reverse;
+      }
+    }
+    .svg-pointer {
+      background: vars.$ui_color_light;
+      box-shadow: 2px 4px 7px rgb(0 0 0 / 10%);
     }
 
     //   .chart_lines {

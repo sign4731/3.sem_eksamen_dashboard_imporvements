@@ -7,7 +7,7 @@ export function makeChart(revenue) {
 
       datasets: [
         {
-          name: "Hourly Revenue",
+          name: "This hour".toUpperCase(),
           chartType: "line",
           values: Object.values(revenue),
         },
@@ -25,7 +25,7 @@ export function makeChart(revenue) {
       xIsSeries: true,
     },
     tooltipOptions: {
-      formatTooltipX: (d) => (d + "").toUpperCase(),
+      formatTooltipX: (d) => d + ":00",
       formatTooltipY: (d) => d + " kr",
     },
     lineOptions: {
